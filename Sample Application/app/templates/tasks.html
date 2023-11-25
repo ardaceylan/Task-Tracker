@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333333;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333333;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button.btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button.btn:hover {
+            background-color: #0056b3;
+        }
+
+        form label {
+            display: block;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        form input[type="text"], form select, form textarea {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #cccccc;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333333;
+            box-sizing: border-box;
+        }
+
+        form input[type="date"], form input[type="datetime-local"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #cccccc;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333333;
+            box-sizing: border-box;
+        }
+
+        form input[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+	<h1>Analysis Results</h1>
+
+	<!-- Display results of query 1 in a table -->
+	<h2>Tasks To Do</h2>
+	<table>
+		<tr>
+			<th>id</th>
+            <th>title</th>
+            <th>description</th>
+            <th>status</th>
+            <th>deadline</th>
+            <th>creation_time</th>
+            <th>done_time</th>
+            <th>user_id</th>
+            <th>task_type</th>
+            <th>Edit</th>
+		</tr>
+		{% for task in tasks_remaining %}
+		<tr>
+			<td>{{ task.id }}</td>
+			<td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+			<td>{{ task.status }}</td>
+            <td>{{ task.deadline }}</td>
+			<td>{{ task.creation_time }}</td>
+            <td>{{ task.done_time }}</td>
+			<td>{{ task.user_id }}</td>
+            <td>{{ task.task_type }}</td>
+            <td>
+
+            <form action="{{ url_for('taskdone', task_id= task.id) }}" method="post">
+            <button class="btn btn-primary">Done</button>
+            </form>
+
+            <form action="{{ url_for('taskdelete', task_id= task.id) }}" method="post">
+            <button class="btn btn-primary">Delete</button>
+            </form>
+
+            </td>
+		</tr>
+		{% endfor %}
+	</table>
+
+    <form action="{{ url_for('analysis') }}" method="GET">
+    <button class="btn btn-primary">Go To Analysis</button>
+    </form>
+</body>
+
+
+
+
+
+<body>
+	<h1>Analysis Results</h1>
+
+	<!-- Display results of query 1 in a table -->
+	<h2>Tasks Done</h2>
+	<table>
+		<tr>
+			<th>id</th>
+            <th>title</th>
+            <th>description</th>
+            <th>status</th>
+            <th>deadline</th>
+            <th>creation_time</th>
+            <th>done_time</th>
+            <th>user_id</th>
+            <th>task_type</th>
+            <th>Edit</th>
+		</tr>
+		{% for task in tasks_done %}
+		<tr>
+
+
+			<form action="{{ url_for('taskdelete', task_id= task.id) }}" method="get"></form>
+				<td><input type="username" class="form-control" id="username" name="username" placeholder={{task.id}}></td>
+				<td>{{ task.title }}</td>
+				<td>{{ task.description }}</td>
+				<td>{{ task.status }}</td>
+				<td>{{ task.deadline }}</td>
+				<td>{{ task.creation_time }}</td>
+				<td>{{ task.done_time }}</td>
+				<td>{{ task.user_id }}</td>
+				<td>{{ task.task_type }}</td>
+				<td>
+			
+				<form action="{{ url_for('taskdelete', task_id= task.id) }}" method="get">
+				<button class="btn btn-primary">Delete</button>
+				</form>
+				<button class="btn btn-primary">Edit</button>
+				</td>
+			</form>
+
+            
+
+            	
+		</tr>
+		{% endfor %}
+	</table>
+
+
+</body>
+
+
+
+
+
+
+<body>
+    <form method="POST" action="{{ url_for('tasks', user_id= user_id) }}">
+    <label for="task_title">Title:</label><br>
+    <input type="text" id="task_title" name="task_title"><br>
+
+    <label for="task_description">Description:</label><br>
+    <textarea id="task_description" name="task_description"></textarea><br>
+
+    <label for="task_status">Status:</label><br>
+    <select id="task_status" name="task_status">
+        <option value="To Do">To Do</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Done">Done</option>
+    </select><br>
+
+    <label for="task_deadline">Deadline:</label><br>
+    <input type="date" id="task_deadline" name="task_deadline"><br>
+
+    <label for="task_creation_time">Creation Time:</label><br>
+    <input type="datetime-local" id="task_creation_time" name="task_creation_time"><br>
+
+    <label for="task_done_time">Done Time:</label><br>
+    <input type="datetime-local" id="task_done_time" name="task_done_time"><br>
+
+    <label for="task_type">Type:</label><br>
+    <input type="text" id="task_type" name="task_type"><br>
+
+    <label for="user_id">User ID:</label><br>
+    <input type="text" id="user_id" name="user_id"><br>
+
+    <br><br>
+    <input type="submit" value="Add Task">
+    </form>
+</body>
+
+
+<form action="{{ url_for('analysis') }}" method="get">
+<button class="btn btn-primary">Go to Analysis Page</button>
+</form>
+
+<form action="{{ url_for('login') }}" method="get">
+<button class="btn btn-primary">Logout</button>
+</form>
+
+
+</html>

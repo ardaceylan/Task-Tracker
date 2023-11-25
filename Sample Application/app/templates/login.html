@@ -1,0 +1,68 @@
+<form action="{{ url_for('login') }}" method="post">
+	{% if message is defined and message %}
+		<div class="alert alert-warning">{{ message }}</div>
+	{% endif %}
+	<div class="form-group">
+		<label for="username">Username:</label>
+		<input type="username" class="form-control" id="username" name="username" placeholder="Enter username">
+	</div>
+	<div class="form-group">
+		<label for="password">Password:</label>
+		<input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+	</div>    
+	<button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+<form action="{{ url_for('register') }}" method="get">
+	<button type="submit" class="btn btn-link">Register</button>
+</form>
+
+<style>
+	form {
+		max-width: 400px;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	input {
+		width: 100%;
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		margin-bottom: 20px;
+	}
+
+	.alert {
+		padding: 10px;
+		margin-bottom: 20px;
+		border: 1px solid #ffc107;
+		background-color: #ffd980;
+		color: #000;
+		border-radius: 5px;
+	}
+
+	.btn {
+		padding: 10px 20px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		color: #fff;
+	}
+
+	.btn-link {
+		background-color: transparent;
+		color: #007bff;
+	}
+</style>
+

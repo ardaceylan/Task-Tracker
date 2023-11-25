@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+    <title>Task Analysis</title>
+    <style>
+        /* Style for the page title */
+        h1 {
+        text-align: center;
+        font-size: 3em;
+        margin-bottom: 0.5em;
+        }
+        
+        /* Style for section headings */
+        h2 {
+        font-size: 2em;
+        margin-top: 2em;
+        margin-bottom: 0.5em;
+        }
+        
+        /* Style for tables */
+        table {
+        border-collapse: collapse;
+        margin: 1em 0;
+        }
+        
+        /* Style for table headers */
+        th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        padding: 0.5em;
+        text-align: center;
+        border: 1px solid #ddd;
+        }
+        
+        /* Style for table cells */
+        td {
+        padding: 0.5em;
+        text-align: center;
+        border: 1px solid #ddd;
+        }
+        
+        /* Style for even-numbered rows */
+        tr:nth-child(even) {
+        background-color: #f2f2f2;
+        }
+        
+        /* Style for the average task completion time */
+        p {
+        font-size: 1.5em;
+        margin: 0;
+        text-align: center;
+        }
+    </style>
+    </head>
+  <body>
+    <h1>Task Analysis for User {{ user_id }}</h1>
+
+    <h2>Tasks Completed After Deadline:</h2>
+	<table>
+		<tr>
+
+            <th>title</th>
+            <th>latency</th>
+
+
+		</tr>
+		{% for task in after_deadline_tasks %}
+		<tr>
+			<td>{{ task.title }}</td>
+            <td>{{ task.latency }}</td>
+
+
+		</tr>
+		{% endfor %}
+	</table>
+
+    <h2>Average Task Completion Time:</h2>
+    <p>{{ avg_time }} seconds</p>
+
+    <h2>Completed Tasks Per Type:</h2>
+	<table>
+		<tr>
+
+            <th>task_type</th>
+            <th>count</th>
+
+
+		</tr>
+		{% for task in type_counts %}
+		<tr>
+			<td>{{ task.task_type }}</td>
+            <td>{{ task.count }}</td>
+
+
+		</tr>
+		{% endfor %}
+	</table>
+
+
+    <h2>Uncompleted Tasks:</h2>
+    <table>
+		<tr>
+
+            <th>title</th>
+            <th>deadline</th>
+
+
+		</tr>
+		{% for task in uncompleted_tasks %}
+		<tr>
+			<td>{{ task.title }}</td>
+            <td>{{ task.deadline }}</td>
+
+
+		</tr>
+		{% endfor %}
+	</table>
+
+    <h2>Top 2 Slowest Completed Tasks:</h2>
+    <table>
+		<tr>
+
+            <th>title</th>
+            <th>done_time</th>
+
+
+		</tr>
+		{% for task in slowest_tasks %}
+		<tr>
+			<td>{{ task.title }}</td>
+            <td>{{ task.done_time }}</td>
+
+
+		</tr>
+		{% endfor %}
+	</table>
+  </body>
+</html>
